@@ -1,5 +1,8 @@
 name: Deploy Mabenoit-test
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: main
@@ -14,7 +17,7 @@ env:
 
   AWS_REGION: ${{ secrets.AWS_REGION }}
 
-  SCORE_HUMANITEC_VERSION: 0.6.0
+  SCORE_HUMANITEC_VERSION: latest
   APP_NAME: mabenoit-test
 
 
@@ -56,6 +59,7 @@ jobs:
       - uses: score-spec/setup-score@v2
         with:
           file: score-humanitec
+          token: ${{ secrets.GITHUB_TOKEN }}
           version: ${{ env.SCORE_HUMANITEC_VERSION }}
       - name: Deploy using Score
         run: |
